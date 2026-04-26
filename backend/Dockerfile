@@ -1,8 +1,7 @@
-FROM --platform=linux/amd64 python:3.11.5-slim
+FROM --platform=linux/amd64 python:3.11.5-alpine
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    curl
 
 RUN adduser -D worker
 USER worker
