@@ -1,19 +1,22 @@
-FROM --platform=linux/amd64 python:3.11.5-slim
+FROM --platform=linux/amd64 python:3.11.5-alpine3.18
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
+RUN apk add --update \
     curl \
- && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/cache/apk/*
 
-RUN adduser --disabled-password worker
+RUN adduser -D worker
 USER worker
 WORKDIR /home/worker
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY --chown=worker:worker requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
 
-COPY app/ app/
+ENV PATH="/home/worker/.local/bin:${PATH}"
+
+COPY --chown=worker:worker app/ app/
 
 LABEL version="1.0.0"
+
 EXPOSE 8000
 ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--proxy-headers"]
 
