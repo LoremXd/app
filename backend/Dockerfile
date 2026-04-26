@@ -7,7 +7,7 @@ RUN adduser -D worker
 USER worker
 WORKDIR /home/worker
 
-COPY --chown=worker:worker requirements.txt .
+COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 ENV PATH="/home/worker/.local/bin:${PATH}"
