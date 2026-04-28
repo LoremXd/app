@@ -77,8 +77,9 @@ spec:
         }
     }
     environment {
-        BACKEND_IMAGE_NAME = "harbor.loremxd/app/backend"
-        FRONTEND_IMAGE_NAME = "harbor.loremxd/app/frontend"
+	REPOSITORY = "harbor.loremxd/app"
+        BACKEND_IMAGE_NAME = "${REPOSITORY}/backend"
+        FRONTEND_IMAGE_NAME = "${REPOSITORY}/frontend"
         TRIVY_CACHE_DIR = "/home/jenkins/agent/caches/trivy"
         TAG = "v${BUILD_NUMBER}"
     }
@@ -99,7 +100,7 @@ spec:
                                     --destination ${FRONTEND_IMAGE_NAME}:${TAG} \
                                     --context ${WORKSPACE}/frontend \
                                     --cache \
-                            --cache-repo harbor.loremxd/app/frontend-cache
+                            --cache-repo ${REPOSITORY}/frontend-cache
                             '''
                         }
                     }
@@ -113,7 +114,7 @@ spec:
                                     --destination ${BACKEND_IMAGE_NAME}:${TAG} \
                                     --context ${WORKSPACE}/backend \
                                     --cache \
-                            --cache-repo harbor.loremxd/app/backend-cache
+                            --cache-repo ${REPOSITORY}/backend-cache
                             '''
                         }
                     }
