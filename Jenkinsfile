@@ -77,7 +77,7 @@ spec:
         }
     }
     environment {
-	REPOSITORY = "harbor.loremxd/app"
+        REPOSITORY = "harbor.loremxd/app"
         BACKEND_IMAGE_NAME = "${REPOSITORY}/backend"
         FRONTEND_IMAGE_NAME = "${REPOSITORY}/frontend"
         TRIVY_CACHE_DIR = "/home/jenkins/agent/caches/trivy"
