@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.name }}
+  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: {{ .Values.db.name }}

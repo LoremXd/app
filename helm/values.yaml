@@ -1,0 +1,25 @@
+namespace:
+  create: true
+  name: "app"
+
+serviceAccount:
+  create: true
+  name: "app-sa"
+
+backend:
+  name: backend
+  image: harbor.loremxd/app/backend
+  tag: v1
+  replicas: 1
+
+frontend:
+  name: frontend
+  image: harbor.loremxd/app/frontend
+  tag: v1
+  replicas: 1
+
+db:
+  name: db
+  image: postgres
+  tag: 16-alpine
+

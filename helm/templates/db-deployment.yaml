@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db.name }}
+  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.db.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.name }}
+    spec:
+      serviceAccount: {{ if .Values.serviceAccount.create }}{{ .Values.serviceAccount.name }}{{ end }}
+      nodeName: kube-node-2
+      containers:
+      - name: db
+        image: {{ .Values.db.image }}:{{ .Values.db.tag }}
+        env:
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_USER
+          valueFrom:
+          value: postgres
+        - name: POSTGRES_DB
+          value: app
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc

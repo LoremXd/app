@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+spec:
+  selector:
+    app: {{ .Values.frontend.name }}
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001

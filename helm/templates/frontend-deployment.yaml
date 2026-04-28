@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.name }}
+    spec:
+      serviceAccount: {{ if .Values.serviceAccount.create }}{{ .Values.serviceAccount.name }}{{ end }}
+      containers:
+      - name: frontend
+        image: {{ .Values.frontend.image }}:{{ .Values.frontend.tag }}
+        env:
+        - name: REACT_APP_FRONT_VERSION
+          value: "0.2.2"
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
