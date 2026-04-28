@@ -100,7 +100,7 @@ spec:
                                     --destination ${FRONTEND_IMAGE_NAME}:${TAG} \
                                     --context ${WORKSPACE}/frontend \
                                     --cache \
-                            --cache-repo ${REPOSITORY}/frontend-cache
+                                    --cache-repo ${REPOSITORY}/frontend-cache
                             '''
                         }
                     }
@@ -114,7 +114,7 @@ spec:
                                     --destination ${BACKEND_IMAGE_NAME}:${TAG} \
                                     --context ${WORKSPACE}/backend \
                                     --cache \
-                            --cache-repo ${REPOSITORY}/backend-cache
+                                    --cache-repo ${REPOSITORY}/backend-cache
                             '''
                         }
                     }
