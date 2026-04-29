@@ -19,12 +19,20 @@ spec:
         image: {{ .Values.db.image }}:{{ .Values.db.tag }}
         env:
         - name: POSTGRES_PASSWORD
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_password
         - name: POSTGRES_USER
           valueFrom:
-          value: postgres
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_user
         - name: POSTGRES_DB
-          value: app
+          valueFrom:
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_db
         ports:
         - containerPort: 5432
         volumeMounts:

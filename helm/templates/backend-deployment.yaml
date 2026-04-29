@@ -18,12 +18,21 @@ spec:
       - name: backend
         image: {{ .Values.backend.image }}:{{ .Values.backend.tag }}
         env:
-        - name: POSTGRES_USER
-          value: postgres
         - name: POSTGRES_PASSWORD
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_user
         - name: POSTGRES_DB
-          value: app
+          valueFrom:
+            secretKeyRef:
+              name: app-db-secret
+              key: pg_db
         - name: POSTGRES_HOST
           value: db
         - name: DB_CONN
