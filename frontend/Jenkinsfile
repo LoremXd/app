@@ -55,6 +55,9 @@ pipeline {
                         sh '''
                             HELM_CACHE_HOME=${WORKSPACE}/helm \
                             helm upgrade app-frontend helm/frontend -n app \
+                                --set frontend.image=${IMAGE_NAME} \
+                                --set frontend.tag=${TAG} \
+                                --timeout 120s \
                                 --wait
                         '''
                     }
