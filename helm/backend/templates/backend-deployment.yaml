@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.backend.name }}
-  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.backend.replicas }}
   selector:
@@ -13,7 +13,7 @@ spec:
       labels:
         app: {{ .Values.backend.name }}
     spec:
-      serviceAccountName: {{ if .Values.serviceAccount.create }}{{ .Values.serviceAccount.name }}{{ end }}
+      serviceAccountName: app-sa
       containers:
       - name: backend
         image: {{ .Values.backend.image }}:{{ .Values.backend.tag }}

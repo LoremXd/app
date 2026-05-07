@@ -1,0 +1,5 @@
+backend:
+  name: backend
+  image: harbor.loremxd/app/backend
+  tag: v1
+  replicas: 1

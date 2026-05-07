@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.db.name }}
-  namespace: {{ if .Values.namespace.create }}{{ .Values.namespace.name }}{{ end }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -12,7 +12,7 @@ spec:
       labels:
         app: {{ .Values.db.name }}
     spec:
-      serviceAccount: {{ if .Values.serviceAccount.create }}{{ .Values.serviceAccount.name }}{{ end }}
+      serviceAccount: app-sa
       nodeName: kube-node-2
       containers:
       - name: db

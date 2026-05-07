@@ -1,0 +1,5 @@
+db:
+  name: db
+  image: postgres
+  tag: 16-alpine
+
